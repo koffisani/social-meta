@@ -48,15 +48,15 @@ class OpenGraphHelper extends Helper
             }
         }
 
-        $this->setType($this->config('type'));
-        $this->setUri($this->request->here);
+        $this->setType($this->getConfig('type'));
+        $this->setUri($this->getView()->getRequest()->getAttribute('here'));
         $this->setTitle($this->_View->fetch('title'));
 
-        if ($appId = $this->config('app_id')) {
+        if ($appId = $this->getConfig('app_id')) {
             $this->setAppId($appId);
         }
 
-        return $this->Html->tag('html', null, $this->config('namespaces') + $options);
+        return $this->Html->tag('html', null, $this->getConfig('namespaces') + $options);
     }
 
     /**
@@ -72,7 +72,8 @@ class OpenGraphHelper extends Helper
             $namespace = 'xmlns:' . $namespace;
         }
 
-        $this->config("namespaces.$namespace", $url);
+        $this->setConfig("namespaces.$namespace", $url);
+
         return $this;
     }
 
@@ -87,7 +88,8 @@ class OpenGraphHelper extends Helper
      */
     public function addTag($namespace, $tag, $value, array $options = [])
     {
-        $this->config("tags.$namespace.$tag", $options ? [$value, $options] : $value);
+        $this->setConfig("tags.$namespace.$tag", $options ? [$value, $options] : $value);
+
         return $this;
     }
 
@@ -158,6 +160,18 @@ class OpenGraphHelper extends Helper
     }
 
     /**
+     * Set URL.
+     *
+     * @param string|array $value URL
+     * @param string $namespace Namespace. Defaults to "og"
+     * @return $this
+     */
+    public function setUrl($value, $namespace = 'og')
+    {
+        return $this->addTag($namespace, 'url', Router::url($value, true));
+    }
+
+    /**
      * Magic method to handle calls to "set<Foo>" methods.
      *
      * @param string $tag Tag name
@@ -181,6 +195,7 @@ class OpenGraphHelper extends Helper
                     $args[] = 'og';
                 }
                 list($value, $namespace) = $args;
+
                 return $this->addTag($namespace, $tag, $value);
 
             case 'image':
@@ -193,6 +208,7 @@ class OpenGraphHelper extends Helper
                     $args[] = 'og';
                 }
                 list($value, $options, $namespace) = $args;
+
                 return $this->addTag($namespace, $tag, $value, $options);
 
             default:

@@ -24,16 +24,16 @@ class CardTest extends TestCase
 
     public function testConstructor()
     {
-        $result = $this->Card->config();
+        $result = $this->Card->getConfig();
         $this->assertEquals('summary', $result['card']);
-        $this->assertEquals($this->View->request->here, $result['url']);
+        $this->assertEquals($this->View->getRequest()->getAttribute('here'), $result['url']);
     }
 
     public function testSetCard()
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setCard('photo'));
 
-        $result = $this->Card->config('tags.twitter.card');
+        $result = $this->Card->getConfig('tags.twitter.card');
         $expected = 'photo';
         $this->assertEquals($expected, $result);
     }
@@ -43,7 +43,7 @@ class CardTest extends TestCase
         $url = ['controller' => 'pages', 'action' => 'display', 'home'];
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setUrl($url));
 
-        $result = $this->Card->config('tags.twitter.url');
+        $result = $this->Card->getConfig('tags.twitter.url');
         $expected = 'http://localhost/pages/display/home';
         $this->assertEquals($expected, $result);
     }
@@ -52,7 +52,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setTitle('foo'));
 
-        $result = $this->Card->config('tags.twitter.title');
+        $result = $this->Card->getConfig('tags.twitter.title');
         $expected = 'foo';
         $this->assertEquals($expected, $result);
     }
@@ -61,7 +61,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setDescription('foo'));
 
-        $result = $this->Card->config('tags.twitter.description');
+        $result = $this->Card->getConfig('tags.twitter.description');
         $expected = 'foo';
         $this->assertEquals($expected, $result);
     }
@@ -70,7 +70,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setData1('foo'));
 
-        $result = $this->Card->config('tags.twitter.data1');
+        $result = $this->Card->getconfig('tags.twitter.data1');
         $expected = 'foo';
         $this->assertEquals($expected, $result);
     }
@@ -79,7 +79,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setLabel1('foo'));
 
-        $result = $this->Card->config('tags.twitter.label1');
+        $result = $this->Card->getConfig('tags.twitter.label1');
         $expected = 'foo';
         $this->assertEquals($expected, $result);
     }
@@ -88,7 +88,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setData2('foo'));
 
-        $result = $this->Card->config('tags.twitter.data2');
+        $result = $this->Card->getConfig('tags.twitter.data2');
         $expected = 'foo';
         $this->assertEquals($expected, $result);
     }
@@ -97,7 +97,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setLabel2('foo'));
 
-        $result = $this->Card->config('tags.twitter.label2');
+        $result = $this->Card->getConfig('tags.twitter.label2');
         $expected = 'foo';
         $this->assertEquals($expected, $result);
     }
@@ -106,7 +106,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setSite('foobar', ['foo' => 'bar']));
 
-        $result = $this->Card->config('tags.twitter.site');
+        $result = $this->Card->getConfig('tags.twitter.site');
         $expected = ['foobar', ['foo' => 'bar']];
         $this->assertEquals($expected, $result);
     }
@@ -115,7 +115,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setCreator('foobar', ['foo' => 'bar']));
 
-        $result = $this->Card->config('tags.twitter.creator');
+        $result = $this->Card->getConfig('tags.twitter.creator');
         $expected = ['foobar', ['foo' => 'bar']];
         $this->assertEquals($expected, $result);
     }
@@ -127,7 +127,7 @@ class CardTest extends TestCase
         $width = '50px';
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setImage($image, compact('height', 'width')));
 
-        $result = $this->Card->config('tags.twitter.image');
+        $result = $this->Card->getConfig('tags.twitter.image');
         $expected = [$image, compact('height', 'width')];
         $this->assertEquals($expected, $result);
     }
@@ -136,7 +136,7 @@ class CardTest extends TestCase
     {
         $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\CardHelper', $this->Card->setPlayer('foobar', ['foo' => 'bar']));
 
-        $result = $this->Card->config('tags.twitter.player');
+        $result = $this->Card->getConfig('tags.twitter.player');
         $expected = ['foobar', ['foo' => 'bar']];
         $this->assertEquals($expected, $result);
     }

@@ -27,11 +27,11 @@ class CardHelper extends Helper
      */
     public function __construct(View $View, array $config = [])
     {
-        $this->_defaultConfig['url'] = $View->request->here;
+        $this->_defaultConfig['url'] = $View->getRequest()->getAttribute('here');
         parent::__construct($View, $config);
 
-        $this->setCard($this->config('card'));
-        $this->setUrl($this->config('url'));
+        $this->setCard($this->getConfig('card'));
+        $this->setUrl($this->getConfig('url'));
         $this->setTitle($View->fetch('title'));
     }
 
@@ -45,7 +45,8 @@ class CardHelper extends Helper
      */
     public function addTag($tag, $value, array $options = [])
     {
-        $this->config("tags.twitter.$tag", $options ? [$value, $options] : $value);
+        $this->setConfig("tags.twitter.$tag", $options ? [$value, $options] : $value);
+
         return $this;
     }
 
@@ -93,6 +94,7 @@ class CardHelper extends Helper
                     $args[] = [];
                 }
                 list($value, $options) = $args;
+
                 return $this->addTag($tag, $value, $options);
 
             default:

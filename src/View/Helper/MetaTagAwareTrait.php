@@ -12,9 +12,9 @@ trait MetaTagAwareTrait
      */
     public function render()
     {
-        $block = $this->config('viewBlockName');
+        $block = $this->getConfig('viewBlockName');
 
-        foreach ((array)$this->config('tags') as $namespace => $values) {
+        foreach ((array)$this->getConfig('tags') as $namespace => $values) {
             foreach ($values as $tag => $content) {
                 $property = "$namespace:$tag";
 

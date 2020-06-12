@@ -44,4 +44,14 @@ class OpenGraphTest extends TestCase
         ];
         $this->assertHtml($expected, $result);
     }
+
+    public function testSetUrl()
+    {
+        $url = ['controller' => 'pages', 'action' => 'display', 'home'];
+        $this->assertInstanceOf('Gourmet\SocialMeta\View\Helper\OpenGraphHelper', $this->OpenGraph->setUrl($url));
+
+        $result = $this->OpenGraph->getConfig("tags.og.url");
+        $expected = 'http://localhost/pages/display/home';
+        $this->assertEquals($expected, $result);
+    }
 }
